@@ -1,5 +1,5 @@
 import { User } from 'src/user/entity/User.entity';
-import { Entity, PrimaryGeneratedColumn, CreateDateColumn,UpdateDateColumn, Column, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, CreateDateColumn,UpdateDateColumn, Column,  JoinColumn, ManyToOne } from 'typeorm';
 
 @Entity({ name: 'chat'})
 export class  Chat {
@@ -27,7 +27,7 @@ export class  Chat {
     })
     updateAt: Date;
 
-    @OneToOne(() => User)
+    @ManyToOne(() => User, (user) => user.id )
     @JoinColumn({
         name: 'user_id'
     })

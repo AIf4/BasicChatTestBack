@@ -19,7 +19,7 @@ export const typeOrnAsyncConfig: TypeOrmModuleAsyncOptions = {
             migrations: ['dist/database/migrations/*{.ts,.js}'],
             migrationsTableName: "migration_table",
             synchronize: true,
-            logging: true,
+            logging: false,
         }
     }
 }

@@ -4,9 +4,9 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  
+  app.enableCors();
   const config = new DocumentBuilder()
-  .addBasicAuth()
+  .addBearerAuth()
   .setTitle('Ket App')
   .setDescription('Backend test')
   .setVersion('1.0')

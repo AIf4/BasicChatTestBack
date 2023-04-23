@@ -1,7 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { ChatService } from '../service/chat.service';
 import { CreateChatDto, UpdateChatDto } from '../dto/chat.dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from 'src/guard/auth.guard';
 
+@ApiBearerAuth()
+@ApiTags("Chat")
 @Controller('chat')
 export class ChatController {
     constructor(private readonly chatService: ChatService){}
@@ -11,6 +15,7 @@ export class ChatController {
         return this.chatService.createChat(payload);
     }
 
+    @UseGuards(AuthGuard)
     @Get()
     getAllChats(){
         return this.chatService.findAllChats();

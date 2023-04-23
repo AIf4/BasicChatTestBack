@@ -16,7 +16,11 @@ export class ChatService {
     }
 
     findAllChats(){
-        return this.chatRepo.find();
+        return this.chatRepo.find({
+            relations: {
+                user: true
+            }
+        });
     }
 
     async findChatById(id: number){

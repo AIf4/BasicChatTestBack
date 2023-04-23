@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Chat } from "src/chat/entity/chat.entity";
+import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: 'user' })
 export class User {
@@ -42,4 +43,5 @@ export class User {
         default: () => 'CURRENT_TIMESTAMP'
     })
     updateAt: Date;
+
 }
