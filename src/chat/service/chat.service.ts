@@ -24,7 +24,12 @@ export class ChatService {
     }
 
     async findChatById(id: number){
-        const chat = await this.chatRepo.findOneBy({ id });
+        const chat = await this.chatRepo.findOne({
+            where:{ id },
+            relations: {
+                user: true
+            }
+        });
         if(!chat) throw new NotFoundException(`Chat no encontrado.`);
         return chat;
     }

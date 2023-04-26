@@ -1,4 +1,4 @@
-import { OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
+import { MessageBody, OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
 import { Socket } from "dgram";
 import { Server } from "socket.io";
 import { CreateChatDto } from "../dto/chat.dto";
@@ -24,16 +24,14 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     }
 
     @SubscribeMessage('event_message')
-    IncommingMessage(
+    async IncommingMessage(
         client: Socket,
-        payload:  { message:string , user_id: number }
+        @MessageBody() payload:  CreateChatDto
         
     ){
-        
-        console.log(payload)
-        this.chatService.createChat(payload);
-        //const chats = this.chatService.findAllChats();
-        //this.server.emit('new_message', chats );
+        const chatSave = await this.chatService.createChat(payload);
+        const chat = await this.chatService.findChatById(chatSave.id);
+        this.server.emit('new_message', chat );
     }
 
 }
