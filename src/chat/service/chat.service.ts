@@ -24,11 +24,13 @@ export class ChatService {
     return chat;
   }
 
-  /* async findChatById(id: number) {
-    const chat = await this.chatRepo.findOneBy({ id });
-    if (!chat) throw new NotFoundException(`Chat no encontrado.`);
-    return chat;
-  } */
+  async findAllChat() {
+    return await this.chatRepo.find({
+      relations: {
+        user: true,
+      },
+    });
+  }
 
   async updateChatById(id: number, body: UpdateChatDto) {
     const chat = await this.chatRepo.findOneBy({ id });
