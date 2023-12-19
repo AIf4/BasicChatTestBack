@@ -6,39 +6,37 @@ import { CreateChatDto, UpdateChatDto } from '../dto/chat.dto';
 
 @Injectable()
 export class ChatService {
-    constructor(
-        @InjectRepository(Chat) private chatRepo: Repository<Chat>
-    ) {}
-    
-    createChat(body: CreateChatDto){
-        const chat = this.chatRepo.create(body);
-        return this.chatRepo.save(chat);
-    }
+  constructor(@InjectRepository(Chat) private chatRepo: Repository<Chat>) {}
 
-    findAllChats(){
-        return this.chatRepo.find({
-            relations: {
-                user: true
-            }
-        });
-    }
+  createChat(body: CreateChatDto) {
+    const chat = this.chatRepo.create(body);
+    return this.chatRepo.save(chat);
+  }
 
-    async findChatById(id: number){
-        const chat = await this.chatRepo.findOneBy({ id });
-        if(!chat) throw new NotFoundException(`Chat no encontrado.`);
-        return chat;
-    }
+  findAllChats() {
+    return this.chatRepo.find({
+      relations: {
+        user: true,
+      },
+    });
+  }
 
-    async updateChatById(id: number, body: UpdateChatDto){
-        const chat = await this.chatRepo.findOneBy({ id });
-        if(!chat) throw new NotFoundException(`chat no encontrado.`);
-        const updateChat = this.chatRepo.merge( chat, body );
-        return this.chatRepo.save(updateChat);
-    }
+  async findChatById(id: number) {
+    const chat = await this.chatRepo.findOneBy({ id });
+    if (!chat) throw new NotFoundException(`Chat no encontrado.`);
+    return chat;
+  }
 
-    async deleteChat(id: number){
-        const chat = await this.chatRepo.delete({ id });
-        if (!chat.affected) throw new NotFoundException(`Chat no encontrado.`);
-        return chat;
-    }
+  async updateChatById(id: number, body: UpdateChatDto) {
+    const chat = await this.chatRepo.findOneBy({ id });
+    if (!chat) throw new NotFoundException(`chat no encontrado.`);
+    const updateChat = this.chatRepo.merge(chat, body);
+    return this.chatRepo.save(updateChat);
+  }
+
+  async deleteChat(id: number) {
+    const chat = await this.chatRepo.delete({ id });
+    if (!chat.affected) throw new NotFoundException(`Chat no encontrado.`);
+    return chat;
+  }
 }

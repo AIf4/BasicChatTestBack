@@ -1,50 +1,56 @@
-import { Controller, Get, Param, Post, Patch, Body, Delete, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Patch,
+  Body,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { UserService } from '../services/user.service';
 import { CreateUserDto, LoginUserDto, UpdateUserDto } from '../dto/user.dto';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthService } from '../services/auth.service';
 import { AuthGuard } from 'src/guard/auth.guard';
 
-
 @ApiBearerAuth()
-@ApiTags("User")
+@ApiTags('User')
 @Controller('user')
 export class UserController {
-       
-    constructor(
-        private readonly userService: UserService,
-        private readonly authService: AuthService
-    ){}
+  constructor(
+    private readonly userService: UserService,
+    private readonly authService: AuthService,
+  ) {}
 
+  @Post()
+  createUser(@Body() payload: CreateUserDto) {
+    return this.userService.createUser(payload);
+  }
 
-    @Post()
-    createUser(@Body() payload: CreateUserDto){
-        return this.userService.createUser(payload);
-    }
+  @Post('login')
+  login(@Body() payload: LoginUserDto) {
+    return this.authService.login(payload);
+  }
 
-    @Post('login')
-    login(@Body() payload: LoginUserDto){
-        return this.authService.login(payload);
-    }
+  @UseGuards(AuthGuard)
+  @Get()
+  getAllUsers() {
+    return this.userService.findAllUser();
+  }
 
-    @UseGuards(AuthGuard)
-    @Get()
-    getAllUsers(){
-        return this.userService.findAllUser();
-    }
+  @Get(':id')
+  getUserById(@Param('id') id: number) {
+    return this.userService.findUserById(id);
+  }
 
-    @Get(':id')
-    getUserById(@Param('id') id:number){
-        return this.userService.findUserById(id);
-    }
+  @Patch(':id')
+  updateUserById(@Param('id') id: number, @Body() payload: UpdateUserDto) {
+    return this.userService.updateUserById(id, payload);
+  }
 
-    @Patch(':id')
-    updateUserById(@Param('id') id:number, @Body() payload: UpdateUserDto){
-        return this.userService.updateUserById(id, payload);
-    }
-
-    @Delete(':id')
-    removeUser(@Param('id') id:number ){
-        return this.userService.deleteUser(id);
-    }
+  @Delete(':id')
+  removeUser(@Param('id') id: number) {
+    return this.userService.deleteUser(id);
+  }
 }
