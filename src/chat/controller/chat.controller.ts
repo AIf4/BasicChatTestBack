@@ -27,7 +27,7 @@ export class ChatController {
   @UseGuards(AuthGuard)
   @Get()
   getAllChats() {
-    return this.chatService.findAllChats();
+    return this.chatService.findAllChat();
   }
 
   @Get(':id')

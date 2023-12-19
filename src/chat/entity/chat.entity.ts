@@ -34,7 +34,7 @@ export class Chat {
   })
   updateAt: Date;
 
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, { nullable: false })
   @JoinColumn({
     name: 'user_id',
   })
