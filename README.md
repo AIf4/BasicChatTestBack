@@ -28,6 +28,10 @@
 
 ## Installation
 
+```Docker
+Run the Docker-compose.yml image to install the database engine, make sure the docker is running.
+```
+
 ```bash
 $ npm install
 ```
@@ -43,19 +47,6 @@ $ npm run start:dev
 
 # production mode
 $ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
 ```
 
 ## Support

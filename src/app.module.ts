@@ -14,8 +14,8 @@ import { ConfigModule } from '@nestjs/config';
     TypeOrmModule.forRootAsync(typeOrnAsyncConfig),
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: ".env"
-    }), 
+      envFilePath: '.env',
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],

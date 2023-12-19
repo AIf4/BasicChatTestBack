@@ -7,24 +7,17 @@ import { User } from './entity/User.entity';
 import { AuthService } from './services/auth.service';
 import { jwtConstants } from 'src/guard/constants';
 
-
-
 @Module({
-    imports:[
-        TypeOrmModule.forFeature([
-            User
-        ]),
-        JwtModule.register({
-            global: true,
-            secret: jwtConstants.secret,
-            signOptions: { expiresIn: '60s' },
-          }),
-    ],
-    controllers: [UserController],
-    providers: [
-        UserService,
-        AuthService
-    ],
-    exports:[AuthService],
+  imports: [
+    TypeOrmModule.forFeature([User]),
+    JwtModule.register({
+      global: true,
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: '60s' },
+    }),
+  ],
+  controllers: [UserController],
+  providers: [UserService, AuthService],
+  exports: [AuthService],
 })
-export class UserModule {};
+export class UserModule {}
